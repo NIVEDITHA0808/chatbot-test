@@ -3,16 +3,16 @@ import os
 # from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from config import model, temperature,max_tokens
-from langchain_core.messages import HumanMessage, AIMessage
+# from langchain_core.messages import HumanMessage, AIMessage
 # Load environment variables
 # load_dotenv()
-os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
-st.write("API Key Loaded:", bool(os.getenv("GROQ_API_KEY")))
+# os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+# st.write("API Key Loaded:", bool(os.getenv("GROQ_API_KEY")))
 
 
 # Initialize ChatGroq LLM
 llm = ChatGroq(
-    # groq_api_key=st.secrets["GROQ_API_KEY"],
+    groq_api_key=st.secrets["GROQ_API_KEY"],
     model=model,  # you can swap to mixtral if needed
     temperature=temperature,
     max_tokens=max_tokens
@@ -36,16 +36,16 @@ if user_input:
     st.session_state.chat_history.append({"role": "user", "content": user_input})
 
     # Get response from Groq
-    # response = llm.invoke(st.session_state.chat_history)
+    response = llm.invoke(st.session_state.chat_history)
 
-    messages = []
-    for msg in st.session_state.chat_history:
-        if msg["role"] == "user":
-            messages.append(HumanMessage(content=msg["content"]))
-        else:
-            messages.append(AIMessage(content=msg["content"]))
+    # messages = []
+    # for msg in st.session_state.chat_history:
+    #     if msg["role"] == "user":
+    #         messages.append(HumanMessage(content=msg["content"]))
+    #     else:
+    #         messages.append(AIMessage(content=msg["content"]))
     
-    response = llm.invoke(messages)
+    # response = llm.invoke(messages)
 
     # Append assistant response
     st.session_state.chat_history.append({"role": "assistant", "content": response.content})
