@@ -1,15 +1,15 @@
 import streamlit as st
 import os
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 from langchain_groq import ChatGroq
 from config import model, temperature,max_tokens
 # Load environment variables
-load_dotenv()
-
+# load_dotenv()
+os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
 
 # Initialize ChatGroq LLM
 llm = ChatGroq(
-    groq_api_key=st.secrets["GROQ_API_KEY"],
+    # groq_api_key=st.secrets["GROQ_API_KEY"],
     model=model,  # you can swap to mixtral if needed
     temperature=temperature,
     max_tokens=max_tokens
